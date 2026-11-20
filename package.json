@@ -1,0 +1,21 @@
+{
+  "name": "com.bigicegames.big.unity.networking.physics",
+  "version": "0.1.0",
+  "displayName": "BIG.Unity.Networking.Physics",
+  "description": "Physics-play toolkit of the BIG ecosystem: first-person physical player with stretchy sticky hands, hanging ropes / lamps, breakable hinges (doors), grabbable ragdolls — and their co-op networking on BIG.Unity.Networking (everyone simulates themselves and what they hold; grab = take over; remote forces for shared objects). The core works offline. Networking part REQUIRES BIG.Unity, BIG.Unity.Networking and FishNet; the player input needs the Input System.",
+  "unity": "2022.3",
+  "license": "MIT",
+  "dependencies": {},
+  "author": {
+    "name": "BigIceGames"
+  },
+  "keywords": [
+    "big",
+    "physics",
+    "networking",
+    "fishnet",
+    "coop",
+    "ragdoll",
+    "rope"
+  ]
+}

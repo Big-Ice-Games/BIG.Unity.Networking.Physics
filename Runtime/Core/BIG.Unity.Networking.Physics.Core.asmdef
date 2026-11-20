@@ -1,0 +1,16 @@
+{
+    "name": "BIG.Unity.Networking.Physics.Core",
+    "rootNamespace": "BIG.Unity.Physical",
+    "references": [
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

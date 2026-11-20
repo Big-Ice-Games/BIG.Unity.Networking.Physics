@@ -1,0 +1,18 @@
+{
+    "name": "BIG.Unity.Networking.Physics.Core.Editor",
+    "rootNamespace": "BIG.Unity.Physical.Editor",
+    "references": [
+        "BIG.Unity.Networking.Physics.Core"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

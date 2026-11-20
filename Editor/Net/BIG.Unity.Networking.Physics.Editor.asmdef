@@ -1,0 +1,30 @@
+{
+    "name": "BIG.Unity.Networking.Physics.Editor",
+    "rootNamespace": "BIG.Unity.Physical.Editor",
+    "references": [
+        "BIG.Unity.Networking.Physics.Core",
+        "BIG.Unity.Networking.Physics",
+        "BIG.Unity",
+        "BIG.Unity.Networking",
+        "FishNet.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "BIG_FISHNET"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.firstgeargames.fishnet",
+            "expression": "",
+            "define": "BIG_FISHNET"
+        }
+    ],
+    "noEngineReferences": false
+}
