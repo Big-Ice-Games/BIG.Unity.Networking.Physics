@@ -39,6 +39,16 @@ namespace BIG.Unity.Physical
         [Tooltip("Over-pull soaked up before it tears out, in newton-seconds.")]
         public float breakImpulse = 150f;
 
+        [Header("Stability (applied at start — no rebuild needed)")]
+        [Tooltip("A thin, light link has almost no resistance to spinning: a hand pulling on its surface whips it around " +
+                 "(and the arm with it). Links get at least this moment of inertia, in kg·m², around every axis. " +
+                 "0.02 calms a hand-held cord; the swing itself is carried by the end object, so it barely changes.")]
+        [Min(0f)] public float linkInertia = 0.02f;
+        [Tooltip("How quickly a link's spinning dies out.")]
+        [Min(0f)] public float linkAngularDamping = 3f;
+        [Tooltip("Fastest a link may spin, in radians per second.")]
+        [Min(1f)] public float linkMaxSpin = 15f;
+
         [Header("Look")]
         public Material ropeMaterial;
         public float ropeWidth = 0.06f;
@@ -62,6 +72,15 @@ namespace BIG.Unity.Physical
         {
             // Built somewhere else and the whole rope moved since? The tether hangs from wherever the rope is now.
             if (_tether != null) _tether.connectedAnchor = transform.position;
+
+            foreach (var link in _links)
+            {
+                if (link == null) continue;
+                link.inertiaTensorRotation = Quaternion.identity;
+                link.inertiaTensor = Vector3.Max(link.inertiaTensor, Vector3.one * linkInertia);
+                link.angularDamping = linkAngularDamping;
+                link.maxAngularVelocity = linkMaxSpin;
+            }
         }
 
         /// <summary> (Re)creates links, joints, tether, mount and renderer. Previously generated parts are removed first. </summary>
