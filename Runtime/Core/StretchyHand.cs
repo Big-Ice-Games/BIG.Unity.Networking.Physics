@@ -87,6 +87,10 @@ namespace BIG.Unity.Physical
         Vector3 _localWrist;
 
         Vector3 _handPos, _flyDir;
+        // A shot at something the eyes see: the collider and the point on it (in its own space) the hand flies to.
+        bool _aimed;
+        Collider _aimCollider;
+        Vector3 _aimLocalPoint, _aimLocalNormal;
         Vector3 _prevAnchor, _remoteVelocity;   // Remote anchors: last step's sticky point and a smoothed velocity estimate.
         bool _hasPrevAnchor;
         float _flown;
@@ -236,18 +240,32 @@ namespace BIG.Unity.Physical
             if (PhysicsQuery.Raycast(aim.position, aim.forward, out RaycastHit hit, S.shootRange, S.grabMask, owner.body))
                 target = hit.point;
 
+            // Aimed at something: that is what the hand grabs — it flies there (homing, the thing may move) and nothing on
+            // the way stops it. The hand starts low and to the side, so a straight physical flight would catch on whatever
+            // is between it and the target (a countertop edge, a door frame) although the eyes see the target fine.
+            // Aimed at nothing: a free shot that sticks to whatever it runs into.
+            _aimCollider = hit.collider;
+            if (_aimCollider != null)
+            {
+                _aimLocalPoint = _aimCollider.transform.InverseTransformPoint(hit.point);
+                _aimLocalNormal = _aimCollider.transform.InverseTransformDirection(hit.normal);
+            }
+
             _handPos = rest.position;
             _flyDir = (target - _handPos).normalized;
             _flown = 0f;
+            _aimed = _aimCollider != null;
             CurrentState = State.Flying;
         }
 
-        void Attach(RaycastHit hit)
+        void Attach(RaycastHit hit) => Attach(hit.collider, hit.point, hit.normal);
+
+        void Attach(Collider collider, Vector3 point, Vector3 normal)
         {
-            _anchorBody = hit.rigidbody;
-            _anchorTransform = _anchorBody != null ? _anchorBody.transform : hit.collider.transform;
-            _localAnchor = _anchorTransform.InverseTransformPoint(hit.point);
-            _localNormal = _anchorTransform.InverseTransformDirection(hit.normal);
+            _anchorBody = collider.attachedRigidbody;
+            _anchorTransform = _anchorBody != null ? _anchorBody.transform : collider.transform;
+            _localAnchor = _anchorTransform.InverseTransformPoint(point);
+            _localNormal = _anchorTransform.InverseTransformDirection(normal);
             if (_anchorBody != null)
             {
                 GrabCounts.TryGetValue(_anchorBody, out int count);
@@ -258,7 +276,7 @@ namespace BIG.Unity.Physical
                 _gripMass = Mathf.Min(JointedMass(_anchorBody), _anchorBody.mass * 3f);
             }
             // The wrist: the arm always leaves the sticky hand straight out of the surface.
-            _localWrist = _anchorTransform.InverseTransformPoint(hit.point + hit.normal * S.wristLength);
+            _localWrist = _anchorTransform.InverseTransformPoint(point + normal * S.wristLength);
             _attachTime = Time.time;
             _strain = 0f;
             _bends.Clear();
@@ -339,6 +357,29 @@ namespace BIG.Unity.Physical
         void StepFlight()
         {
             float step = S.shootSpeed * Time.fixedDeltaTime;
+            if (_aimed)
+            {
+                if (_aimCollider == null || !_aimCollider.enabled || !_aimCollider.gameObject.activeInHierarchy)
+                {
+                    CurrentState = State.Retracting; // The target went away mid-flight.
+                    return;
+                }
+
+                Vector3 point = _aimCollider.transform.TransformPoint(_aimLocalPoint);
+                Vector3 toTarget = point - _handPos;
+                if (toTarget.magnitude <= step)
+                {
+                    Attach(_aimCollider, point, _aimCollider.transform.TransformDirection(_aimLocalNormal));
+                    return;
+                }
+
+                _flyDir = toTarget.normalized;
+                _handPos += _flyDir * step;
+                _flown += step;
+                if (_flown >= S.shootRange * 2f) CurrentState = State.Retracting; // It keeps running away.
+                return;
+            }
+
             if (PhysicsQuery.SphereCast(_handPos, S.handRadius, _flyDir, out RaycastHit hit, step, S.grabMask, owner.body))
             {
                 Attach(hit);
