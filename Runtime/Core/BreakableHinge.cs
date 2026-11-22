@@ -7,7 +7,7 @@ namespace BIG.Unity.Physical
     /// Puts this object on a physics hinge along one of its edges — a door, a gate, a hatch, a lid — and gives the hinge a
     /// strength (<see cref="BreakableMount"/>): push or pull it open with hands or body, or tear it off.
     /// Set the numbers and press <b>Build</b> in the inspector (or call <see cref="Build"/>).
-    /// Networked: GameObject > BIG Networking > Physics > Hinged (door).
+    /// Networked: GameObject > BIG > Networking > Physics > Hinged (door).
     /// </summary>
     [DisallowMultipleComponent]
     public class BreakableHinge : MonoBehaviour

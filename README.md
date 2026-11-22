@@ -25,7 +25,7 @@ Also needs the **Input System** package (player input). The core works without t
 
 ## Create things (single player)
 
-**GameObject > BIG Physics >**
+**GameObject > BIG > Physics >**
 
 | Item | What you get |
 |---|---|
@@ -38,7 +38,7 @@ Any `Rigidbody` is grabbable as is. A hand pulls with at most 250 N (lifts ~25 k
 
 ## Make it networked
 
-**GameObject > BIG Networking > Physics >** (on the selection; adds the physics component and builds it first if missing)
+**GameObject > BIG > Networking > Physics >** (on the selection; adds the physics component and builds it first if missing)
 
 | Preset | Adds |
 |---|---|

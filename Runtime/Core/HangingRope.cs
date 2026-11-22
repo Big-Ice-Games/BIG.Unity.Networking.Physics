@@ -10,7 +10,7 @@ namespace BIG.Unity.Physical
     /// capsules on ball joints, drawn as one smooth rope by <see cref="RopeRenderer"/>), ties the end object to them, adds a
     /// tether that carries the real load (the rope can't stretch like rubber however hard it's pulled) and a
     /// <see cref="BreakableMount"/> so a hard enough pull tears it off the ceiling.
-    /// Hands stick to any link or to the end. Networked: GameObject > BIG Networking > Physics > Hanging rope.
+    /// Hands stick to any link or to the end. Networked: GameObject > BIG > Networking > Physics > Hanging rope.
     /// </summary>
     [DisallowMultipleComponent]
     public class HangingRope : MonoBehaviour

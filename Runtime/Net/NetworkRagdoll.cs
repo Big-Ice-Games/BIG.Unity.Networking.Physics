@@ -5,7 +5,7 @@ namespace BIG.Unity.Physical.Net
 {
     /// <summary>
     /// Network side of a <see cref="Ragdoll"/> (NPC / creature made of jointed bodies). The NetworkObject sits on the
-    /// ragdoll root, every body part has NetworkTransform + NetworkBody + NetworkGrabbable (GameObject > BIG Networking >
+    /// ragdoll root, every body part has NetworkTransform + NetworkBody + NetworkGrabbable (GameObject > BIG > Networking >
     /// Physics > Ragdoll NPC sets it all up).
     /// <list type="bullet">
     /// <item><see cref="Ragdoll.simulate"/> follows who simulates the core body: the host while it roams, the grabbing

@@ -12,7 +12,7 @@ namespace BIG.Unity.Physical.Editor
 {
     /// <summary>
     /// One click from a physics object to a networked one ("everyone simulates themselves and what they hold"):
-    /// GameObject > BIG Networking > Physics > ... on the selection (scene objects or prefab mode).
+    /// GameObject > BIG > Networking > Physics > ... on the selection (scene objects or prefab mode).
     /// <list type="bullet">
     /// <item><b>Physical player</b> — a <see cref="PhysicalPlayer"/> avatar: NetworkObject, NetworkTransform, NetworkBody
     /// (PhysicalPlayer profile: its owner simulates it, never handed back), NetworkPlayer, <see cref="NetworkPhysicalPlayer"/>;
@@ -28,7 +28,7 @@ namespace BIG.Unity.Physical.Editor
     /// </summary>
     public static class PhysicalNetworking
     {
-        private const string MENU = "GameObject/BIG Networking/Physics/";
+        private const string MENU = "GameObject/BIG/Networking/Physics/";
         private const string PROFILES = "Assets/BIG.Networking/Profiles";
         public const string PROP_PROFILE = PROFILES + "/PhysicalProp.asset";
         public const string PLAYER_PROFILE = PROFILES + "/PhysicalPlayer.asset";
@@ -73,7 +73,7 @@ namespace BIG.Unity.Physical.Editor
             var controller = go.GetComponent<PhysicalPlayer>();
             if (controller == null)
             {
-                Debug.LogError($"[Network] '{go.name}' has no PhysicalPlayer — create one with GameObject > BIG Physics > Physical Player.", go);
+                Debug.LogError($"[Network] '{go.name}' has no PhysicalPlayer — create one with GameObject > BIG > Physics > Physical Player.", go);
                 return;
             }
 

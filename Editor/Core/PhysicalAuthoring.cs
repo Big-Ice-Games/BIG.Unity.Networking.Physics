@@ -6,13 +6,13 @@ using UnityEngine;
 namespace BIG.Unity.Physical.Editor
 {
     /// <summary>
-    /// Creates ready-to-play physics objects (single player — for networked ones see GameObject > BIG Networking > Physics):
-    /// GameObject > BIG Physics > Physical Player / Hanging Rope / Hinged Door / Simple Ragdoll. The same calls are public
+    /// Creates ready-to-play physics objects (single player — for networked ones see GameObject > BIG > Networking > Physics):
+    /// GameObject > BIG > Physics > Physical Player / Hanging Rope / Hinged Door / Simple Ragdoll. The same calls are public
     /// for scene builders. Materials it needs are created in Assets/BIG.Physics/Materials (URP Lit if present, else Standard).
     /// </summary>
     public static class PhysicalAuthoring
     {
-        private const string MENU = "GameObject/BIG Physics/";
+        private const string MENU = "GameObject/BIG/Physics/";
         private const string MATERIALS = "Assets/BIG.Physics/Materials";
 
         [MenuItem(MENU + "Physical Player", false, 10)]
